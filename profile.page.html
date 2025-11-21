@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información del Usuario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text>
+        <p><strong>Nombre:</strong> {{ user?.name }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Mis Compras</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="purchases.length === 0">
+        <ion-text>
+          <p>Aún no has realizado compras</p>
+        </ion-text>
+      </div>
+
+      <ion-card *ngFor="let purchase of purchases" class="purchase-card">
+        <ion-card-content>
+          <ion-text>
+            <h3>Compra #{{ purchase.id }}</h3>
+            <p><strong>Fecha:</strong> {{ formatDate(purchase.date) }}</p>
+            <p><strong>Total:</strong> ${{ purchase.total.toFixed(2) }}</p>
+            <p><strong>Productos:</strong></p>
+          </ion-text>
+          <ion-list>
+            <ion-item *ngFor="let product of purchase.products; let i = index">
+              <img [src]="product.image" [alt]="product.title" class="purchase-item-image" />
+              <ion-label>
+                <h3 class="purchase-item-title">{{ product.title }}</h3>
+                <p>${{ product.price }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
